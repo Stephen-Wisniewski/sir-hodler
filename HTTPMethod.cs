@@ -7,15 +7,13 @@ using System.Threading.Tasks;
 
 namespace SirHodlerBot
 {
-    public class HTTPMethod
+    public static class HTTPMethod
     {
-        public string Get()
+        public static string Get()
         {
             using (var Client = new WebClient())
             {
-                var json = Client.DownloadString("http://quotes.rest/qod.json");
-
-                return json;
+                return Client.DownloadString("http://quotes.rest/qod.json");
             }
         }
     }

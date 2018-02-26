@@ -9,11 +9,14 @@ using System.Threading.Tasks;
 
 namespace SirHodlerBot
 {
-    public class Message
+    public static class Message
     {
-        public string GetQuoteOfTheDay()
+        public static string GetQuoteOfTheDay()
         {
-            return null;
+            string JSONString = HTTPMethod.Get();
+            JObject JSON = JObject.Parse(JSONString);
+
+            return (string)JSON["contents"]["quotes"][0]["quote"];
         }
     }
 }

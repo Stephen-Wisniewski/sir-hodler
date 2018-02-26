@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 using SirHodlerBot;
 
 namespace SirHodlerBot
@@ -11,8 +12,8 @@ namespace SirHodlerBot
     {
         static void Main(string[] args)
         {
-            HTTPMethod Method = new HTTPMethod();
-            Console.WriteLine(Method.Get());
+            Console.WriteLine(Message.GetQuoteOfTheDay());
+
             Console.ReadLine();
         }
     }
