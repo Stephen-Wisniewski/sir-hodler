@@ -16,7 +16,10 @@ namespace SirHodlerBot
             string JSONString = HTTPMethod.Get();
             JObject JSON = JObject.Parse(JSONString);
 
-            return (string)JSON["contents"]["quotes"][0]["quote"];
+            string Quote = (string)JSON["contents"]["quotes"][0]["quote"];
+            string Author = (string)JSON["contents"]["quotes"][0]["author"];
+
+            return "\"" + Quote + "\" - " + Author;
         }
     }
 }
