@@ -13,7 +13,7 @@ namespace SirHodlerBot
     {
         public static string GetQuoteOfTheDay()
         {
-            string JSONString = HTTPMethod.Get();
+            string JSONString = HTTPMethod.Get("http://quotes.rest/qod.json");
             JObject JSON = JObject.Parse(JSONString);
 
             string Quote = (string)JSON["contents"]["quotes"][0]["quote"];
