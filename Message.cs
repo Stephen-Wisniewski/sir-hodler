@@ -25,7 +25,7 @@ namespace SirHodlerBot
         // Next time add a paramter for picking which currency to check for volatility?
         public static string GetVolatilityMessage()
         {
-            double ChangeIn24Hours = Get24HourBitcoinPriceChange();
+            double ChangeIn24Hours = Get7DayPriceChange("ethereum");
             string Message = "";
 
             if (ChangeIn24Hours >= 2)
@@ -35,7 +35,7 @@ namespace SirHodlerBot
                 Message = "Fasten your seat belts... We're going to the moon!";
 
             if (ChangeIn24Hours >= 10)
-                Message = "Bitcoin is up " + ChangeIn24Hours +  ". We're mooning! When lambo?";
+                Message = "Bitcoin is up " + ChangeIn24Hours + ". We're mooning! When lambo?";
 
             if (ChangeIn24Hours >= 15)
                 Message = "Fuck the moon. We're going to mars.";
@@ -43,14 +43,29 @@ namespace SirHodlerBot
             return Message;
         }
 
-        private static double Get24HourBitcoinPriceChange()
+        public static double Get1HourPriceChange(string Coin)
         {
-            string JSONString = HTTPMethod.Get("https://api.coinmarketcap.com/v1/ticker/bitcoin/");
+            return GetCoinPriceChange(Coin, "1h");
+        }
+
+        public static double Get24HourPriceChange(string Coin)
+        {
+            return GetCoinPriceChange(Coin, "24h");
+        }
+
+        public static double Get7DayPriceChange(string Coin)
+        {
+            return GetCoinPriceChange(Coin, "7d");
+        }
+
+        private static double GetCoinPriceChange(string Coin, string Time)
+        {
+            string JSONString = HTTPMethod.Get("https://api.coinmarketcap.com/v1/ticker/" + Coin + "/");
             JSONString = JSONString.TrimStart(new char[] { '[' }).TrimEnd(new char[] { ']' });
 
             JObject JSON = JObject.Parse(JSONString);
 
-            double hourchange = (double)JSON["percent_change_24h"];
+            double hourchange = (double)JSON["percent_change_" + Time];
 
             return hourchange;
         }
