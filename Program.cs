@@ -13,16 +13,14 @@ namespace SirHodlerBot
     {
         static void Main(string[] args)
         {
-            //var facebookClient = new FacebookClient();
-            //var facebookService = new FacebookService(facebookClient);
-            //var getAccountTask = facebookService.GetAccountAsync(FacebookSettings.AccessToken);
-            //Task.WaitAll(getAccountTask);
-            //var account = getAccountTask.Result;
-            //Console.WriteLine(account.Id);
+            var facebookClient = new FacebookClient();
+            var facebookService = new FacebookService(facebookClient);
+            var getAccountTask = facebookService.GetAccountAsync(FacebookSettings.AccessToken);
+            Task.WaitAll(getAccountTask);
 
-            //var postOnWallTask = facebookService.PostOnWallAsync(FacebookSettings.AccessToken, "I'm alive!");
+            string Quote = Message.GetQuoteOfTheDay();
 
-            Console.WriteLine(Message.GetVolatilityMessage(6));
+            var postOnWallTask = facebookService.PostOnWallAsync(FacebookSettings.AccessToken, Quote);
 
             Console.ReadLine();
         }
