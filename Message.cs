@@ -19,7 +19,7 @@ namespace SirHodlerBot
             string Quote = (string)JSON["contents"]["quotes"][0]["quote"];
             string Author = (string)JSON["contents"]["quotes"][0]["author"];
 
-            return "\"" + Quote + "\" - " + Author;
+            return $"\"{Quote}\" - {Author}";
         }
 
         public static string GetVolatilityMessage(string Coin)
@@ -65,7 +65,7 @@ namespace SirHodlerBot
 
             JObject JSON = JObject.Parse(JSONString);
 
-            double hourchange = (double)JSON["percent_change_" + Time];
+            double hourchange = (double)JSON[$"percent_change_{Time}"];
 
             return hourchange;
         }
