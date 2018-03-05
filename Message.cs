@@ -35,7 +35,7 @@ namespace SirHodlerBot
             string Coin = (string)JObj["name"];
             string Change24Hours = (string)JObj["percent_change_24h"];
 
-            string UpOrDown = ((Func<string>)(() => { if (Double.Parse(Change24Hours) < 0) return "Down"; return "Up"; }))();
+            string UpOrDown = ((Func<string>)(() => { if (Double.Parse(Change24Hours) < 0) return "down"; return "up"; }))();
 
             return $"Today's coin of of the day is {Coin}.\n\nIt's gone {UpOrDown} by {Change24Hours} percent in the last day!";
         }
@@ -64,7 +64,7 @@ namespace SirHodlerBot
             string Coin = (string)JObj["name"];
             string Change7Days = (string)JObj["percent_change_7d"];
 
-            string UpOrDown = ((Func<string>)(() => {if(Double.Parse(Change7Days) < 0) return "Down"; return "Up"; }))();
+            string UpOrDown = ((Func<string>)(() => {if(Double.Parse(Change7Days) < 0) return "down"; return "up"; }))();
 
             return $"This weeks coin of of the week is {Coin}.\n\nIt's gone {UpOrDown} by {Change7Days} percent in the last 7 days!";
         }
