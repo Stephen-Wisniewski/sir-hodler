@@ -22,23 +22,23 @@ namespace SirHodlerBot
             return "\"" + Quote + "\" - " + Author;
         }
 
-        // Next time add a paramter for picking which currency to check for volatility?
-        public static string GetVolatilityMessage()
+        public static string GetVolatilityMessage(string Coin)
         {
-            double ChangeIn24Hours = Get7DayPriceChange("ethereum");
+            double ChangeIn24Hours = Get7DayPriceChange(Coin);
+            double Weight = CalculateCoinWeight(GetCoinRank(Coin));
             string Message = "";
 
             if (ChangeIn24Hours >= 2)
-                Message = "Starting to moon, boys?";
+                Message = $"{Coin} is up {ChangeIn24Hours}. It's a green day.)";
 
             if (ChangeIn24Hours >= 5)
-                Message = "Fasten your seat belts... We're going to the moon!";
+                Message = $"{Coin} is up {ChangeIn24Hours}. Fasten your seat belts...";
 
             if (ChangeIn24Hours >= 10)
-                Message = "Bitcoin is up " + ChangeIn24Hours + ". We're mooning! When lambo?";
+                Message = $"{Coin} is up {ChangeIn24Hours}. We're mooning! When lambo?";
 
             if (ChangeIn24Hours >= 15)
-                Message = "Fuck the moon. We're going to mars.";
+                Message = $"{Coin} is up {ChangeIn24Hours}. We're going to mars!";
 
             return Message;
         }
@@ -68,6 +68,20 @@ namespace SirHodlerBot
             double hourchange = (double)JSON["percent_change_" + Time];
 
             return hourchange;
+        }
+
+        private static int GetCoinRank(string Coin)
+        {
+            string JSONString = HTTPMethod.Get("https://api.coinmarketcap.com/v1/ticker/" + Coin + "/");
+            JSONString = JSONString.TrimStart(new char[] { '[' }).TrimEnd(new char[] { ']' });
+            JObject JSON = JObject.Parse(JSONString);
+
+            return (int)JSON["rank"];
+        }
+
+        private static double CalculateCoinWeight(int Rank)
+        {
+            return (Rank / 10);
         }
     }
 }
