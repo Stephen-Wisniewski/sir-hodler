@@ -21,7 +21,7 @@ namespace SirHodlerBot
             //string Quote = Message.GetQuoteOfTheDay();
 
             //var postOnWallTask = facebookService.PostOnWallAsync(FacebookSettings.AccessToken, Quote);
-            Console.WriteLine(Message.GetCoinOfTheDay());
+            Console.WriteLine(Message.GetCoinOfTheWeek());
             Console.ReadLine();
         }
     }
