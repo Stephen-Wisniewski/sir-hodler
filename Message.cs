@@ -35,7 +35,7 @@ namespace SirHodlerBot
             string Coin = (string)JObj["name"];
             string Change24Hours = (string)JObj["percent_change_24h"];
 
-            return $"Today's coin of of the day is {Coin}. \n\n It's gone up by {Change24Hours} percent in the last day!";
+            return $"Today's coin of of the day is {Coin}.\n\nIt's gone up by {Change24Hours} percent in the last day!";
         }
 
         public static string GetCoinOfTheWeek()
@@ -62,7 +62,7 @@ namespace SirHodlerBot
             string Coin = (string)JObj["name"];
             string Change7Days = (string)JObj["percent_change_7d"];
 
-            return $"This weeks coin of of the week is {Coin}. \n\n It's gone up by {Change7Days} percent in the last 7 days!";
+            return $"This weeks coin of of the week is {Coin}.\n\nIt's gone up by {Change7Days} percent in the last 7 days!";
         }
 
         public static string GetQuoteOfTheDay()
