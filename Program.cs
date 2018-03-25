@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using ConsoleApplication;
 using Newtonsoft.Json.Linq;
@@ -13,17 +14,45 @@ namespace SirHodlerBot
     {
         static void Main(string[] args)
         {
-            //var facebookClient = new FacebookClient();
-            //var facebookService = new FacebookService(facebookClient);
-            //var getAccountTask = facebookService.GetAccountAsync(FacebookSettings.PageAccessToken);
-            //Task.WaitAll(getAccountTask);
+            DateTime Day7TempTime = DateTime.Now;
+            DateTime Day1TempTime = DateTime.Now;
+            DateTime Minute10TempTime = DateTime.Now;
 
-            //string Quote = "Bzzdssdszzzzzzzzzzzzzdsfdsfsdfszzzzzt";
+            while (true)
+            {
+                DateTime CurrentTime = DateTime.Now;
 
-            //var postOnWallTask = facebookService.PostOnWallAsync(FacebookSettings.PageAccessToken, Quote);
-            ////Console.WriteLine(Message.GetCoinOfTheWeek());
-            Console.WriteLine(Message.GetCoinOfTheWeek());
-            Console.ReadLine();
+                if (CurrentTime > Day7TempTime.AddDays(7))
+                {
+                    PostMessage(Message.GetCoinOfTheWeek());
+                    Day7TempTime = CurrentTime; 
+                }
+
+                if (CurrentTime > Day1TempTime.AddDays(1))
+                {
+                    PostMessage(Message.GetCoinOfTheDay());
+                    int milliseconds = 20000;
+                    Thread.Sleep(milliseconds);
+                    PostMessage(Message.GetQuoteOfTheDay());
+                    Day1TempTime = CurrentTime;
+                }
+
+                if (CurrentTime > Minute10TempTime.AddMinutes(10))
+                {
+                    PostMessage(Message.GetVolatilityMessage("bitcoin"));
+                    Minute10TempTime = CurrentTime;
+                }
+            }
+        }
+
+        private static void PostMessage(string Message)
+        {
+            var facebookClient = new FacebookClient();
+            var facebookService = new FacebookService(facebookClient);
+            var getAccountTask = facebookService.GetAccountAsync(FacebookSettings.PageAccessToken);
+            var postOnWallTask = facebookService.PostOnWallAsync(FacebookSettings.PageAccessToken, Message);
+
+            Task.WaitAll(getAccountTask);
         }
     }
 }

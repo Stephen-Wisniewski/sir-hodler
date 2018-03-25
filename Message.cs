@@ -57,10 +57,8 @@ namespace SirHodlerBot
                 return "Coin not found.";
 
             JObject JObj = (JObject)Array.ElementAt(Index);
-
             string Coin = (string)JObj["name"];
             string Change7Days = (string)JObj["percent_change_7d"];
-
             string UpOrDown = ((Func<string>)(() => { if (Double.Parse(Change7Days) < 0) return "down"; return "up"; }))();
 
             return $"This weeks coin of of the week is {Coin}.\n\nIt's gone {UpOrDown} by {Change7Days} percent in the last 7 days!";
@@ -140,7 +138,6 @@ namespace SirHodlerBot
 
             return (long)JSON["market_cap_usd"];
         }
-
 
         private static double CalculateCoinWeight(string Coin)
         {
