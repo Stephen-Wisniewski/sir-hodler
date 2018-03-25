@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
 namespace SirHodlerBot
 {
     public static class Message
@@ -31,10 +30,8 @@ namespace SirHodlerBot
                 return "Coin not found.";
 
             JObject JObj = (JObject)Array.ElementAt(Index);
-
             string Coin = (string)JObj["name"];
             string Change24Hours = (string)JObj["percent_change_24h"];
-
             string UpOrDown = ((Func<string>)(() => { if (Double.Parse(Change24Hours) < 0) return "down"; return "up"; }))();
 
             return $"Today's coin of of the day is {Coin}.\n\nIt's gone {UpOrDown} by {Change24Hours} percent in the last day!";
@@ -83,19 +80,19 @@ namespace SirHodlerBot
         public static string GetVolatilityMessage(string Coin)
         {
             double ChangeIn24Hours = Get7DayPriceChange(Coin);
-            double Weight = CalculateCoinWeight(GetCoinRank(Coin));
+            double Weight = CalculateCoinWeight(Coin);
             string Message = "";
 
-            if (ChangeIn24Hours >= 2)
+            if (ChangeIn24Hours >= (2*Weight))
                 Message = $"{Coin} is up {ChangeIn24Hours}. It's a green day.)";
 
-            if (ChangeIn24Hours >= 5)
+            if (ChangeIn24Hours >= (5*Weight))
                 Message = $"{Coin} is up {ChangeIn24Hours}. Fasten your seat belts...";
 
-            if (ChangeIn24Hours >= 10)
+            if (ChangeIn24Hours >= (10*Weight))
                 Message = $"{Coin} is up {ChangeIn24Hours}. We're mooning! When lambo?";
 
-            if (ChangeIn24Hours >= 15)
+            if (ChangeIn24Hours >= (15*Weight))
                 Message = $"{Coin} is up {ChangeIn24Hours}. We're going to mars!";
 
             return Message;
@@ -120,9 +117,7 @@ namespace SirHodlerBot
         {
             string JSONString = HTTPMethod.Get($"https://api.coinmarketcap.com/v1/ticker/{Coin}/");
             JSONString = JSONString.TrimStart(new char[] { '[' }).TrimEnd(new char[] { ']' });
-
             JObject JSON = JObject.Parse(JSONString);
-
             double hourchange = (double)JSON[$"percent_change_{Time}"];
 
             return hourchange;
@@ -137,9 +132,39 @@ namespace SirHodlerBot
             return (int)JSON["rank"];
         }
 
-        private static double CalculateCoinWeight(int Rank)
+        private static long GetCoinMarketCap(string Coin)
         {
-            return (Rank / 10);
+            string JSONString = HTTPMethod.Get("https://api.coinmarketcap.com/v1/ticker/" + Coin + "/");
+            JSONString = JSONString.TrimStart(new char[] { '[' }).TrimEnd(new char[] { ']' });
+            JObject JSON = JObject.Parse(JSONString);
+
+            return (long)JSON["market_cap_usd"];
+        }
+
+
+        private static double CalculateCoinWeight(string Coin)
+        {
+            long MarketCap = GetCoinMarketCap(Coin);
+            double Weight = 4;
+
+            //TODO: Make marketcap comparison below relative to Bitcoin/rank 1 price
+
+            if (MarketCap > 250000000)
+                Weight = 2.5;
+
+            if (MarketCap > 750000000)
+                Weight = 1.75;
+
+            if (MarketCap > 2000000000)
+                Weight = 1.25;
+
+            if (MarketCap > 7500000000)
+                Weight = 1.1;
+
+            if (MarketCap > 40000000000)
+                Weight = 1;
+
+            return Weight;
         }
     }
 }
