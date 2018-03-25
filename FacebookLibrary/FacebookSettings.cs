@@ -7,7 +7,7 @@ namespace ConsoleApplication
 {
     public static class FacebookSettings
     {
-        public static string AccessToken = "EAACEdEose0cBAN9vxdoFAqJbPJbY72IkgsZCXYAkJlIYNzcihTQum9xQ27bsBMJk517IERK3GbR045zXcBirK962EJabYHWWLVIQ7PS7pmwWfDOjO7lrKjMc1hMMGxncveIXFZBp8U1GUv8suYIQjMQPZBt12sobG6cELPJbtF9LZCtuOoKM2aEstBJwboZBubGrOM2e1SwZDZD";
+        public static string AccessToken = "EAACZADZClcmjYBAFhmnrVQKAkgjrfVWU6pAfiW9jcvxR0Y3t8ZBEBaMWFYKB0a70XbBozf2YEFZCZCWCxZCddCeEj1nvkCZAFauCLcAlaZAdCcMlMnsU9Om3KuIHFYc8t3uoZC6OQspbgIAN8nARn5ANoqCTqqS79JpZCoLH5c5b8vVAZDZD";
         public static string PageAccessToken = "";
 
         static FacebookSettings()

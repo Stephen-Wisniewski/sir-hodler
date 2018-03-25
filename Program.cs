@@ -25,7 +25,7 @@ namespace SirHodlerBot
                 if (CurrentTime > Day7TempTime.AddDays(7))
                 {
                     PostMessage(Message.GetCoinOfTheWeek());
-                    Day7TempTime = CurrentTime; 
+                    Day7TempTime = CurrentTime;
                 }
 
                 if (CurrentTime > Day1TempTime.AddDays(1))
@@ -37,7 +37,7 @@ namespace SirHodlerBot
                     Day1TempTime = CurrentTime;
                 }
 
-                if (CurrentTime > Minute10TempTime.AddMinutes(10))
+                if (CurrentTime > Minute10TempTime.AddMinutes(1))
                 {
                     PostMessage(Message.GetVolatilityMessage("bitcoin"));
                     Minute10TempTime = CurrentTime;
