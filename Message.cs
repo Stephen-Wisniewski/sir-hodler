@@ -81,6 +81,18 @@ namespace SirHodlerBot
             double Weight = CalculateCoinWeight(Coin);
             string Message = "";
 
+            if (ChangeIn24Hours >= (-2 * Weight))
+                Message = $"Slight dip. We're down by: {ChangeIn24Hours}";
+
+            if (ChangeIn24Hours >= (-5 * Weight))
+                Message = $"Uh-oh. We're down by: {ChangeIn24Hours}";
+
+            if (ChangeIn24Hours >= (-10 * Weight))
+                Message = $"Bills lost 2 dollars. :( We're down by {ChangeIn24Hours}!";
+
+            if (ChangeIn24Hours >= (-15 * Weight))
+                Message = $"BOGGED";
+
             if (ChangeIn24Hours >= (2*Weight))
                 Message = $"{Coin} is up {ChangeIn24Hours}. It's a green day.)";
 
